@@ -22,6 +22,20 @@ plugin.tx_persons {
     mvc {
         #callDefaultActionIfActionCantBeResolved = 1
     }
+    settings {
+        # uncomment to enable image processing in json view
+        # imageProcessing {
+        # keys below are allowed, values are default
+        # and should only be set if different from default.
+        #    width = 200
+        #    height = m200
+        #    minWidth = 50
+        #    minHeight = 50
+        #    maxWidth = 300
+        #    maxHeight = 300
+        #    cropVariant = default
+        #}
+    }
 }
 
 personPage = PAGE
@@ -33,7 +47,7 @@ personPage {
         xhtml_cleaning = 0
         admPanel = 0
         debug = 0
-        no_cache = 1
+        no_cache = 0
     }
 
     10 = USER

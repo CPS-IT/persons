@@ -26,6 +26,28 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  */
 class AbstractJsonView extends JsonView
 {
+    /**
+     * settings key for image processing configuration
+     */
+    const IMAGE_PROCESSING_KEY = 'imageProcessing';
+
+    /**
+     * @var \CPSIT\Persons\Service\ImageService
+     */
+    protected $imageService;
+
+    /**
+     * @var array
+     */
+    protected $settings = [];
+
+    /**
+     * @param \CPSIT\Persons\Service\ImageService $imageService
+     */
+    public function injectImageService(\CPSIT\Persons\Service\ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
 
     /**
      * Traverses the given object structure in order to transform it into an
@@ -100,6 +122,11 @@ class AbstractJsonView extends JsonView
     {
         $originalResource = $object->getOriginalResource();
 
+        if (!empty($this->settings[static::IMAGE_PROCESSING_KEY])) {
+            $processedImage = $this->imageService->getProcessedFile($object);
+            $transformedObject['uri'] = ltrim($this->imageService->getImageUri($processedImage), DIRECTORY_SEPARATOR);
+        }
+
         foreach (ObjectAccess::getGettableProperties($originalResource) as $propertyName => $propertyValue) {
             if (in_array($propertyName, $configuration)) {
                 if (is_object($propertyValue)) {
@@ -111,5 +138,15 @@ class AbstractJsonView extends JsonView
         }
 
         return $transformedObject;
+    }
+
+
+    /**
+     * Injects the settings
+     * @param $settings
+     */
+    public function injectSettings(array $settings)
+    {
+        $this->settings = $settings;
     }
 }
