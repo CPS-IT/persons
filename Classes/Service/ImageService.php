@@ -19,7 +19,7 @@ namespace CPSIT\Persons\Service;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use DWenzel\T3events\CallStaticTrait;
+use CPSIT\Persons\CallStaticTrait;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
