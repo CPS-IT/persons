@@ -3,6 +3,8 @@ Manage persons. This is an extension for the TYPO3 CMS.
 
 ### Table of contents
 
+* Configuration
+    * [TypoScript](./Documentation/Configuration/TypoScript.md)
 * Models
     * [Content](./Documentation/Models/Content.md)
     * [Person](./Documentation/Models/Content.md)
