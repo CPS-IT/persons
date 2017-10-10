@@ -59,6 +59,7 @@ class PersonControllerSlot implements SingletonInterface
     static protected $settingsKeyToTransferInListAction = [
         'categories',
         'detailPid',
+        'languageParam',
         'languageUid',
         'detailPid',
         'detailUrlPage',
@@ -120,7 +121,7 @@ class PersonControllerSlot implements SingletonInterface
     {
         $additionalConfiguration = [
             static::OPTIONS_KEY => [],
-            static::LOCALLANG_KEY => $this->callStatic(LocalizationUtility::class, 'getAllLanguageKeys')
+            static::LOCALLANG_KEY => $this->callStatic(LocalizationUtility::class, 'getCurrentLanguageKeys')
         ];
         foreach ($keys as $item) {
             if (!empty($params['settings'][$item])) {

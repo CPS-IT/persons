@@ -28,7 +28,7 @@ class PersonControllerSlotTest extends UnitTestCase
     protected function mockLocalizationUtility(array $returnValue = []) {
         $this->subject->expects($this->any())
             ->method('callStatic')
-            ->with(LocalizationUtility::class, 'getAllLanguageKeys')
+            ->with(LocalizationUtility::class, 'getCurrentLanguageKeys')
             ->willReturn($returnValue);
     }
 

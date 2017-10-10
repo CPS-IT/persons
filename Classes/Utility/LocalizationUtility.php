@@ -12,6 +12,7 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
     /**
      * Gets all language keys for a given extension
      *
+     * @param string $extensionName
      * @return array
      */
     public static function getAllLanguageKeys($extensionName = 'persons') {
@@ -25,6 +26,17 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
         }
 
         return self::$translatedKeys[$extensionName];
+    }
+
+    /**
+     * Gets language keys for current language for a given extension
+     *
+     * @param string $extensionName
+     * @return array
+     */
+    public static function getCurrentLanguageKeys($extensionName = 'persons') {
+        $allKeys = self::getAllLanguageKeys($extensionName);
+        return isset($allKeys[self::$languageKey])? $allKeys[self::$languageKey] : [];
     }
 
     /**
