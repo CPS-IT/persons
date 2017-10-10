@@ -33,7 +33,7 @@ plugin.tx_persons {
         #    cropVariant = default
         #}
         languageParam = &L=
-        languageUid < config.sys_language_uid
+        languageUid =
         detailUrlPage = index.php?id
         detailUrlPerson = &tx_persons_persons[person]=
         detailUrlAction = &tx_persons_persons[action]=show&tx_persons_persons[controller]=Person

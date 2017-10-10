@@ -36,7 +36,14 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
      */
     public static function getCurrentLanguageKeys($extensionName = 'persons') {
         $allKeys = self::getAllLanguageKeys($extensionName);
-        return isset($allKeys[self::$languageKey])? $allKeys[self::$languageKey] : [];
+        $currentKeys = [];
+        if (isset($allKeys[self::$languageKey])) {
+            $currentKeys = $allKeys[self::$languageKey];
+        } elseif (isset($allKeys['default'])) {
+            $currentKeys = $allKeys['default'];
+        }
+
+        return $currentKeys;
     }
 
     /**
