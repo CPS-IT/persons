@@ -1,12 +1,9 @@
 
 plugin.tx_persons {
     view {
-        templateRootPaths.0 = EXT:persons/Resources/Private/Templates/
-        templateRootPaths.1 = {$plugin.tx_persons.view.templateRootPath}
-        partialRootPaths.0 = EXT:persons/Resources/Private/Partials/
-        partialRootPaths.1 = {$plugin.tx_persons.view.partialRootPath}
-        layoutRootPaths.0 = EXT:persons/Resources/Private/Layouts/
-        layoutRootPaths.1 = {$plugin.tx_persons.view.layoutRootPath}
+        templateRootPaths.0 = {$plugin.tx_persons.view.templateRootPath}
+        partialRootPaths.0 =  {$plugin.tx_persons.view.partialRootPath}
+        layoutRootPaths.0 = {$plugin.tx_persons.view.layoutRootPath}
     }
     persistence {
         storagePid = {$plugin.tx_persons.persistence.storagePid}
@@ -22,6 +19,20 @@ plugin.tx_persons {
     mvc {
         #callDefaultActionIfActionCantBeResolved = 1
     }
+    settings {
+        # uncomment to enable image processing in json view
+        # imageProcessing {
+        # keys below are allowed, values are default
+        # and should only be set if different from default.
+        #    width = 200
+        #    height = m200
+        #    minWidth = 50
+        #    minHeight = 50
+        #    maxWidth = 300
+        #    maxHeight = 300
+        #    cropVariant = default
+        #}
+    }
 }
 
 personPage = PAGE
@@ -33,7 +44,7 @@ personPage {
         xhtml_cleaning = 0
         admPanel = 0
         debug = 0
-        no_cache = 1
+        no_cache = 0
     }
 
     10 = USER
@@ -47,35 +58,3 @@ personPage {
     settings < plugin.tx_persons.settings
 }
 
-plugin.tx_persons._CSS_DEFAULT_STYLE (
-        textarea.f3-form-error {
-                background-color:#FF9F9F;
-                border: 1px #FF0000 solid;
-        }
-
-        input.f3-form-error {
-                background-color:#FF9F9F;
-                border: 1px #FF0000 solid;
-        }
-
-        .{extension.cssClassName} table {
-                border-collapse:separate;
-                border-spacing:10px;
-        }
-
-        .{extension.cssClassName} table th {
-                font-weight:bold;
-        }
-
-        .{extension.cssClassName} table td {
-                vertical-align:top;
-        }
-
-        .typo3-messages .message-error {
-                color:red;
-        }
-
-        .typo3-messages .message-ok {
-                color:green;
-        }
-)
