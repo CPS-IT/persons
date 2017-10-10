@@ -32,6 +32,11 @@ plugin.tx_persons {
         #    maxHeight = 300
         #    cropVariant = default
         #}
+        languageParam = &L=
+        languageUid < config.sys_language_uid
+        detailUrlPage = index.php?id
+        detailUrlPerson = &tx_persons_persons[person]=
+        detailUrlAction = &tx_persons_persons[action]=show&tx_persons_persons[controller]=Person
     }
 }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace CPSIT\Persons\Slot;
 
 use CPSIT\Persons\CallStaticTrait;
@@ -46,7 +47,9 @@ class PersonControllerSlot implements SingletonInterface
      * @var array
      */
     static protected $settingsKeyToTransferInFilterAction = [
-        'categories', 'visible', 'selected'
+        'categories', 'visible', 'selected',
+        'languageParam',
+        'languageUid'
     ];
 
     /**
@@ -54,7 +57,13 @@ class PersonControllerSlot implements SingletonInterface
      * @var array
      */
     static protected $settingsKeyToTransferInListAction = [
-        'categories', 'detailPid'
+        'categories',
+        'detailPid',
+        'languageUid',
+        'detailPid',
+        'detailUrlPage',
+        'detailUrlPerson',
+        'detailUrlAction'
     ];
 
 
