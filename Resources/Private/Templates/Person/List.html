@@ -11,8 +11,12 @@ This Template is responsible for creating a list of persons.
     <f:comment>
         <f:debug>{persons}</f:debug>
     </f:comment>
-    <f:for each="{persons}" as="person">
-        <f:render partial="Person/ListItem" arguments="{person: person, settings: settings}"/>
-    </f:for>
+    <div class="tx-person-list" id="js-person-list"
+         data-list-persons-uri="{f:uri.action(action: 'list', format: 'json', pageType: '1498743904')}">
+        <script type="application/json" id="tx-persons-list-configuration"><f:format.raw>{configuration->f:format.json()}</f:format.raw></script>
+        <f:for each="{persons}" as="person">
+            <f:render partial="Person/ListItem" arguments="{person: person, settings: settings}"/>
+        </f:for>
+    </div>
 </f:section>
 </html>
