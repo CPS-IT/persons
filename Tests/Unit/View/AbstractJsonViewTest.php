@@ -12,8 +12,10 @@ namespace CPSIT\Persons\Tests\Unit\View;
  *  (c) 2017 Dirk Wenzel <wenzel@cps-it.de>
  *
  ***/
+use CPSIT\Persons\Service\ImageService;
 use CPSIT\Persons\View\AbstractJsonView;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
@@ -50,6 +52,13 @@ class AbstractJsonViewTest extends UnitTestCase
     protected $controllerContext;
 
     /**
+     * @var ImageService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $imageService;
+
+    protected $processedFile;
+
+    /**
      * set up subject
      */
     public function setUp()
@@ -59,6 +68,18 @@ class AbstractJsonViewTest extends UnitTestCase
         $this->controllerContext = $this->getMockBuilder(ControllerContext::class)
             ->disableOriginalConstructor()->getMock();
         $this->subject->setControllerContext($this->controllerContext);
+        $this->processedFile = $this->getMockBuilder(ProcessedFile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->imageService = $this->getMockBuilder(ImageService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getProcessedFile', 'getImageUri', 'setProcessingConfiguration'])
+            ->getMock();
+        $this->imageService->expects($this->any())
+            ->method('getProcessedFile')
+            ->will($this->returnValue($this->processedFile));
+        $this->subject->injectImageService($this->imageService);
     }
 
     /**
@@ -123,6 +144,88 @@ class AbstractJsonViewTest extends UnitTestCase
 
         $this->assertSame(
             $expected,
+            $this->subject->render()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function settingsInitiallyIsEmptyArray()
+    {
+        $expectedSettings = [];
+        $this->assertAttributeSame(
+            $expectedSettings,
+            'settings',
+            $this->subject
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function settingsCanBeInjected() {
+        $settings = ['foo'];
+        $this->subject->injectSettings($settings);
+
+        $this->assertAttributeSame(
+            $settings,
+            'settings',
+            $this->subject
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function renderProcessesFileReferenceIfEnabledInSettings() {
+        $this->imageService = $this->getMockBuilder(ImageService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getProcessedFile', 'getImageUri'])
+            ->getMock();
+        $this->subject->injectImageService($this->imageService);
+
+        $settings = [
+            AbstractJsonView::IMAGE_PROCESSING_KEY => [
+                'non empty configuration'
+            ]
+        ];
+        $originalResource = new \stdClass();
+        $expectedUri = 'foo/uri';
+        $uriWithLeadingSlash = DIRECTORY_SEPARATOR . $expectedUri;
+
+        $expectedJson = json_encode(['uri' => $expectedUri]);
+
+        $this->subject->injectSettings($settings);
+        $object = $this->getMockBuilder(FileReference::class)
+            ->disableOriginalConstructor()->setMethods(['getOriginalResource'])->getMock();
+        $object->method('getOriginalResource')
+            ->willReturn($originalResource);
+
+        $this->subject->assign('foo', $object);
+
+        $variablesToRender = ['foo'];
+        $configuration = [
+            'foo' => [
+                '_exclude' => ['pid', 'uid'],
+                '_descend' => [
+                    '_only' => ['bar']
+                ]
+            ]
+        ];
+        $this->subject->setVariablesToRender($variablesToRender);
+        $this->subject->setConfiguration($configuration);
+
+        $this->imageService->expects($this->once())
+            ->method('getProcessedFile')
+            ->will($this->returnValue($this->processedFile));
+
+        $this->imageService->expects($this->once())
+            ->method('getImageUri')
+            ->will($this->returnValue($uriWithLeadingSlash));
+
+        $this->assertSame(
+            $expectedJson,
             $this->subject->render()
         );
     }

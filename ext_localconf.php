@@ -32,5 +32,22 @@ call_user_func(
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
             '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:persons/Configuration/TSconfig/ContentElementWizard.txt">');
+
+        // connect slots to signals
+        /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        $signalSlotDispatcher->connect(
+            \CPSIT\Persons\Controller\PersonController::class,
+            \CPSIT\Persons\Controller\PersonController::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN,
+            \CPSIT\Persons\Slot\PersonControllerSlot::class,
+            \CPSIT\Persons\Slot\PersonControllerSlot::SLOT_FILTER_ACTION_BEFORE_ASSIGN
+        );
+        $signalSlotDispatcher->connect(
+            \CPSIT\Persons\Controller\PersonController::class,
+            \CPSIT\Persons\Controller\PersonController::SIGNAL_LIST_ACTION_BEFORE_ASSIGN,
+            \CPSIT\Persons\Slot\PersonControllerSlot::class,
+            \CPSIT\Persons\Slot\PersonControllerSlot::SLOT_LIST_ACTION_BEFORE_ASSIGN
+        );
     }
+
 );
