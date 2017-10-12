@@ -127,8 +127,9 @@ class AbstractJsonView extends JsonView
             $transformedObject['uri'] = ltrim($this->imageService->getImageUri($processedImage), DIRECTORY_SEPARATOR);
         }
 
-        foreach (ObjectAccess::getGettableProperties($originalResource) as $propertyName => $propertyValue) {
-            if (in_array($propertyName, $configuration)) {
+        foreach ($configuration as $propertyName) {
+            if (ObjectAccess::isPropertyGettable($originalResource, $propertyName)) {
+                $propertyValue = ObjectAccess::getProperty($originalResource, $propertyName);
                 if (is_object($propertyValue)) {
                     $transformedObject[$propertyName] = $this->transformObject($propertyValue, $configuration);
                 } else {
