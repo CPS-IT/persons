@@ -124,7 +124,7 @@ class PersonControllerSlot implements SingletonInterface
             static::LOCALLANG_KEY => $this->callStatic(LocalizationUtility::class, 'getCurrentLanguageKeys')
         ];
         foreach ($keys as $item) {
-            if (!empty($params['settings'][$item])) {
+            if (isset($params['settings'][$item])) {
                 $additionalConfiguration[static::OPTIONS_KEY][$item] = $params['settings'][$item];
             }
         }

@@ -1,3 +1,7 @@
+2017-10-17         [RELEASE] Release of persons 0.6.1 (Dirk Wenzel)
+2017-10-13 18d8a3f [BUGFIX] fixed error in PersonControllerSlot which prevented values of zero from being passed to configuration for frontend (Dirk Wenzel)
+2017-10-12 31c7e64 [BUGFIX] Fetch only required property values for FileReferences (Nicole Cordes)
+
 2017-10-11         [RELEASE] Release of persons 0.6.0 (Dirk Wenzel)
 2017-10-11 f4ca8df [TASK] script tags and data attributes added to templates for filter and list view. (Dirk Wenzel)
 2017-10-10 88a4157 [BUGFIX] fixed error where default language were not found in LocalizationUtility (Dirk Wenzel)
