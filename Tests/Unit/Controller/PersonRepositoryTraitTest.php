@@ -28,6 +28,8 @@ class PersonRepositoryTraitTest extends UnitTestCase
 
     /**
      * set up
+     *
+     * @throws \ReflectionException
      */
     public function setUp()
     {
@@ -42,7 +44,7 @@ class PersonRepositoryTraitTest extends UnitTestCase
     public function PersonRepositoryCanBeInjected()
     {
         /** @var PersonRepository|\PHPUnit_Framework_MockObject_MockObject $personRepository */
-        $personRepository = $this->getMock(
+        $personRepository = $this->getAccessibleMock(
             PersonRepository::class, [], [], '', false
         );
 
