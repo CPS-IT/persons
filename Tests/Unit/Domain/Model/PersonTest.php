@@ -72,10 +72,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setTitle('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'title',
-            $this->subject
+            $this->subject->getTitle()
         );
     }
 
@@ -97,10 +96,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setFirstName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'firstName',
-            $this->subject
+            $this->subject->getFirstName()
         );
     }
 
@@ -122,10 +120,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setLastName('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'lastName',
-            $this->subject
+            $this->subject->getLastName()
         );
     }
 
@@ -147,10 +144,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setPosition('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'position',
-            $this->subject
+            $this->subject->getPosition()
         );
     }
 
@@ -172,10 +168,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setAddress('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'address',
-            $this->subject
+            $this->subject->getAddress()
         );
     }
 
@@ -197,10 +192,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setZip('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'zip',
-            $this->subject
+            $this->subject->getZip()
         );
     }
 
@@ -222,10 +216,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setWww('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'www',
-            $this->subject
+            $this->subject->getWww()
         );
     }
 
@@ -247,10 +240,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setCity('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'city',
-            $this->subject
+            $this->subject->getCity()
         );
     }
 
@@ -272,10 +264,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setPhone('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'phone',
-            $this->subject
+            $this->subject->getPhone()
         );
     }
 
@@ -297,10 +288,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setFax('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'fax',
-            $this->subject
+            $this->subject->getFax()
         );
     }
 
@@ -322,10 +312,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setEmail('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'email',
-            $this->subject
+            $this->subject->getEmail()
         );
     }
 
@@ -347,10 +336,9 @@ class PersonTest extends UnitTestCase
     {
         $this->subject->setBiography('Conceived at T3CON10');
 
-        self::assertAttributeEquals(
+        self::assertSame(
             'Conceived at T3CON10',
-            'biography',
-            $this->subject
+            $this->subject->getBiography()
         );
     }
 
@@ -398,10 +386,9 @@ class PersonTest extends UnitTestCase
         $fileReferenceFixture = new FileReference();
         $this->subject->setImage($fileReferenceFixture);
 
-        self::assertAttributeEquals(
+        self::assertEquals(
             $fileReferenceFixture,
-            'image',
-            $this->subject
+            $this->subject->getImage()
         );
     }
 
@@ -427,10 +414,9 @@ class PersonTest extends UnitTestCase
         $objectStorageHoldingExactlyOneContentElement->attach($contentElement);
         $this->subject->setContentElements($objectStorageHoldingExactlyOneContentElement);
 
-        self::assertAttributeEquals(
+        self::assertEquals(
             $objectStorageHoldingExactlyOneContentElement,
-            'contentElements',
-            $this->subject
+            $this->subject->getContentElements()
         );
     }
 
@@ -490,10 +476,9 @@ class PersonTest extends UnitTestCase
         $objectStorageHoldingExactlyOneCategory->attach($category);
         $this->subject->setCategories($objectStorageHoldingExactlyOneCategory);
 
-        self::assertAttributeEquals(
+        self::assertEquals(
             $objectStorageHoldingExactlyOneCategory,
-            'categories',
-            $this->subject
+            $this->subject->getCategories()
         );
     }
 

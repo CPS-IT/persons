@@ -22,9 +22,10 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class PersonRepository extends Repository
 {
     /**
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface Matching Records
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @var string $recordList A comma separated string containing ids
      * @var string $order Optional ordering in the form 'fieldName1|asc,fieldName2/desc'
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface Matching Records
      */
     public function findMultipleByUid($recordList, $order = null)
     {
@@ -60,14 +61,15 @@ class PersonRepository extends Repository
         if (!empty($orderItems)) {
             // go through every order statement
             foreach ($orderItems as $orderItem) {
-                list($orderField, $ascDesc) = GeneralUtility::trimExplode('|', $orderItem, true);
+                $configuration = GeneralUtility::trimExplode('|', $orderItem, true, 2);
                 // count == 1 means that no direction is given
-                if ($ascDesc) {
+                if (count($configuration) > 1) {
+                    list($orderField, $ascDesc) = $configuration;
                     $orderings[$orderField] = ((strtolower($ascDesc) == 'desc') ?
                         QueryInterface::ORDER_DESCENDING :
                         QueryInterface::ORDER_ASCENDING);
                 } else {
-                    $orderings[$orderField] = QueryInterface::ORDER_ASCENDING;
+                    $orderings[$configuration[0]] = QueryInterface::ORDER_ASCENDING;
                 }
             }
         }

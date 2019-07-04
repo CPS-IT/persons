@@ -16,7 +16,7 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
      * @return array
      */
     public static function getAllLanguageKeys($extensionName = 'persons') {
-       self::initializeLocalization($extensionName);
+        self::initializeLocalization(self::getLanguageFilePath($extensionName), $extensionName, self::getLanguageKeys()['alternativeLanguageKeys']);
         if (empty(self::$translatedKeys[$extensionName]) && !empty(self::$LOCAL_LANG[$extensionName])) {
             foreach (self::$LOCAL_LANG[$extensionName] as $languageKey => $languageEntries) {
                 foreach ($languageEntries as $entryKey => $entryValue) {
@@ -37,8 +37,9 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
     public static function getCurrentLanguageKeys($extensionName = 'persons') {
         $allKeys = self::getAllLanguageKeys($extensionName);
         $currentKeys = [];
-        if (isset($allKeys[self::$languageKey])) {
-            $currentKeys = $allKeys[self::$languageKey];
+        $languageKey = static::getLanguageKey();
+        if (isset($allKeys[$languageKey])) {
+            $currentKeys = $allKeys[$languageKey];
         } elseif (isset($allKeys['default'])) {
             $currentKeys = $allKeys['default'];
         }
@@ -51,6 +52,6 @@ class LocalizationUtility extends \TYPO3\CMS\Extbase\Utility\LocalizationUtility
      * @return string
      */
     public static function getLanguageKey() {
-        return self::$languageKey;
+        return self::getLanguageKeys()['languageKey'];
     }
 }

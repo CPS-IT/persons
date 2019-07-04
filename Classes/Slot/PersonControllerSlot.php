@@ -42,21 +42,12 @@ class PersonControllerSlot implements SingletonInterface
     const OPTIONS_KEY = 'options';
     const LOCALLANG_KEY = 'locallang';
 
-    /**
-     * Settings keys which should be transferred from TypoScript in filter action
-     * @var array
-     */
-    static protected $settingsKeyToTransferInFilterAction = [
+    const TRANSFER_KEYS_FILTER_ACTION = [
         'categories', 'visible', 'selected',
         'languageParam',
         'languageUid'
     ];
-
-    /**
-     * Settings keys which should be transferred from TypoScript in list action
-     * @var array
-     */
-    static protected $settingsKeyToTransferInListAction = [
+    const TRANSFER_KEYS_LIST_ACTION = [
         'categories',
         'detailPid',
         'languageParam',
@@ -66,6 +57,18 @@ class PersonControllerSlot implements SingletonInterface
         'detailUrlPerson',
         'detailUrlAction'
     ];
+
+    /**
+     * Settings keys which should be transferred from TypoScript in filter action
+     * @var array
+     */
+    static protected $settingsKeyToTransferInFilterAction = self::TRANSFER_KEYS_FILTER_ACTION;
+
+    /**
+     * Settings keys which should be transferred from TypoScript in list action
+     * @var array
+     */
+    static protected $settingsKeyToTransferInListAction = self::TRANSFER_KEYS_LIST_ACTION;
 
 
     /**

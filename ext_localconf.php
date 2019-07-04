@@ -31,7 +31,7 @@ call_user_func(
 
         // wizards
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:persons/Configuration/TSconfig/ContentElementWizard.txt">');
+            '@import "EXT:persons/Configuration/TSconfig/ContentElementWizard.tsconfig"');
 
         // connect slots to signals
         /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */

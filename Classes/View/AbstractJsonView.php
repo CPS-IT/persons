@@ -150,4 +150,12 @@ class AbstractJsonView extends JsonView
     {
         $this->settings = $settings;
     }
+
+    /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
 }
