@@ -1,3 +1,4 @@
+# customsubcategory=crop=Cropping
 
 plugin.tx_persons {
     view {
@@ -11,5 +12,15 @@ plugin.tx_persons {
     persistence {
         # cat=plugin.tx_persons//a; type=string; label=Default storage PID
         storagePid =
+    }
+    settings {
+        crop {
+            # cat=plugin.tx_persons/crop/a; type=boolean; label=Enable cropping of text in list view
+            enable = 1
+            # cat=plugin.tx_persons/crop/b; type=int+; label=Max characters of cropped text in list view
+            maxCharacters = 300
+            # cat=plugin.tx_persons/crop/c; type=boolean; label=Respect word boundaries of cropped text in list view
+            respectWordBoundaries = 1
+        }
     }
 }

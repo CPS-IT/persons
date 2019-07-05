@@ -7,8 +7,8 @@ This Template is responsible for displaying a single view for a person
     <h1>Single View for Person</h1>
 
     <f:flashMessages/>
-    <f:render partial="Person/Properties" arguments="{person:person, settings: settings}"/>
-    <f:link.action action="list">Back to list</f:link.action>
+    <f:render partial="Person/Properties" arguments="{person: person}" />
+    <f:link.action action="list"><f:translate key="detail.backToList" default="Back to list" /></f:link.action>
     <br/>
 </f:section>
 </html>

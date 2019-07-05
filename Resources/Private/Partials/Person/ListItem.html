@@ -1,7 +1,22 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<f:link.action
-        action="show"
-        arguments="{person: person}">
-    {person.firstName} {person.lastName}
-</f:link.action>
+
+<f:variable name="name">{person.firstName}{f:if(condition: person.lastName, then: ' {person.LastName}')}</f:variable>
+<f:variable name="detailUri">{f:uri.action(action: 'show', arguments: {person: person})}</f:variable>
+
+<li>
+    <h3><a href="{detailUri}">{name}</a></h3>
+
+    <f:if condition="{person.shortBiography}">
+        <f:if condition="{settings.crop.enable}">
+            <f:then>
+                {person.shortBiography -> f:format.crop(maxCharacters: settings.crop.maxCharacters, append: '…', respectWordBoundaries: settings.crop.respectWordBoundaries, respectHtml: 1) -> f:format.html()}
+            </f:then>
+            <f:else>
+                {person.shortBiography -> f:format.html()}
+            </f:else>
+        </f:if>
+    </f:if>
+
+    <f:format.html><a href="{detailUri}"><f:translate key="list.readMore" default="Read more" /></a></f:format.html>
+</li>
 </html>
