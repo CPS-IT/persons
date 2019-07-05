@@ -6,9 +6,9 @@ use CPSIT\Persons\Controller\PersonController;
 use CPSIT\Persons\Domain\Model\Person;
 use CPSIT\Persons\Domain\Repository\PersonRepository;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 
 /**
  * Class PersonControllerTest
@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
 class PersonControllerTest extends UnitTestCase
 {
     /**
-     * @var \CPSIT\Persons\Controller\PersonController|\PHPUnit_Framework_MockObject_MockObject
+     * @var PersonController|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $subject = null;
 
@@ -33,7 +33,7 @@ class PersonControllerTest extends UnitTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->subject = $this->getMockBuilder(\CPSIT\Persons\Controller\PersonController::class)
+        $this->subject = $this->getMockBuilder(PersonController::class)
             ->setMethods(['redirect', 'forward', 'addFlashMessage', 'emitSignal'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -91,9 +91,7 @@ class PersonControllerTest extends UnitTestCase
             $settings
         );
 
-        $persons = $this->getMockBuilder(ObjectStorage::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $persons = GeneralUtility::intExplode(',', $settings['selectedPersons'], true);
 
         $personRepository = $this->getMockBuilder(PersonRepository::class)
             ->setMethods(['findMultipleByUid'])->disableOriginalConstructor()->getMock();

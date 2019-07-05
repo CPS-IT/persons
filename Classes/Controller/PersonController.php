@@ -13,10 +13,16 @@ namespace CPSIT\Persons\Controller;
  *
  ***/
 
+use CPSIT\Persons\Domain\Model\Person;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
+
 /**
  * PersonController
  */
-class PersonController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class PersonController extends ActionController
 {
     use PersonRepositoryTrait, SignalTrait;
 
@@ -26,9 +32,10 @@ class PersonController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * action list
      *
-     * @return void
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function listAction()
+    public function listAction(): void
     {
         $persons = $this->personRepository->findAll();
 
@@ -47,10 +54,9 @@ class PersonController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * action show
      *
-     * @param \CPSIT\Persons\Domain\Model\Person $person
-     * @return void
+     * @param Person $person
      */
-    public function showAction(\CPSIT\Persons\Domain\Model\Person $person)
+    public function showAction(Person $person): void
     {
         $this->view->assign('person', $person);
     }
@@ -58,8 +64,10 @@ class PersonController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
     /**
      * Action show selected
      * Displays one ore more persons selected in plugin
+     *
+     * @throws InvalidConfigurationTypeException
      */
-    public function showSelectedAction()
+    public function showSelectedAction(): void
     {
         $persons = $this->personRepository->findMultipleByUid($this->settings['selectedPersons']);
         $this->view->assign('persons', $persons);
@@ -69,7 +77,7 @@ class PersonController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * Action filter
      * Display filter for list view
      */
-    public function filterAction()
+    public function filterAction(): void
     {
         $templateVariables = [
             'categories' => $this->settings['categories'],
