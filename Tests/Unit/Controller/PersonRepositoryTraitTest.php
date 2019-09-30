@@ -1,8 +1,8 @@
 <?php
 namespace CPSIT\Persons\Tests\Controller;
 
+use CPSIT\Persons\Tests\Unit\Controller\MockClassUsingPersonRepositoryTrait;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use CPSIT\Persons\Controller\PersonRepositoryTrait;
 use CPSIT\Persons\Domain\Repository\PersonRepository;
 
 /***
@@ -22,7 +22,7 @@ use CPSIT\Persons\Domain\Repository\PersonRepository;
 class PersonRepositoryTraitTest extends UnitTestCase
 {
     /**
-     * @var \CPSIT\Persons\Controller\PersonRepositoryTrait
+     * @var MockClassUsingPersonRepositoryTrait
      */
     protected $subject;
 
@@ -31,9 +31,7 @@ class PersonRepositoryTraitTest extends UnitTestCase
      */
     public function setUp()
     {
-        $this->subject = $this->getMockForTrait(
-            PersonRepositoryTrait::class
-        );
+        $this->subject = new MockClassUsingPersonRepositoryTrait();
     }
 
     /**
@@ -42,16 +40,15 @@ class PersonRepositoryTraitTest extends UnitTestCase
     public function PersonRepositoryCanBeInjected()
     {
         /** @var PersonRepository|\PHPUnit_Framework_MockObject_MockObject $personRepository */
-        $personRepository = $this->getMock(
-            PersonRepository::class, [], [], '', false
-        );
+        $personRepository = $this->getMockBuilder(PersonRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->subject->injectPersonRepository($personRepository);
 
-        $this->assertAttributeSame(
+        self::assertSame(
             $personRepository,
-            'personRepository',
-            $this->subject
+            $this->subject->getPersonRepository()
         );
     }
 }

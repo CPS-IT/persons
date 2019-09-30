@@ -154,10 +154,10 @@ class AbstractJsonViewTest extends UnitTestCase
     public function settingsInitiallyIsEmptyArray()
     {
         $expectedSettings = [];
-        $this->assertAttributeSame(
+
+        self::assertSame(
             $expectedSettings,
-            'settings',
-            $this->subject
+            $this->subject->getSettings()
         );
     }
 
@@ -165,13 +165,12 @@ class AbstractJsonViewTest extends UnitTestCase
      * @test
      */
     public function settingsCanBeInjected() {
-        $settings = ['foo'];
-        $this->subject->injectSettings($settings);
+        $expectedSettings = ['foo'];
+        $this->subject->injectSettings($expectedSettings);
 
-        $this->assertAttributeSame(
-            $settings,
-            'settings',
-            $this->subject
+        self::assertSame(
+            $expectedSettings,
+            $this->subject->getSettings()
         );
     }
 

@@ -119,8 +119,8 @@ class Person extends AbstractEntity
      * image
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @lazy
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $image = null;
 
@@ -128,14 +128,14 @@ class Person extends AbstractEntity
      * Content elements
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CPSIT\Persons\Domain\Model\Content>
-     * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $contentElements = null;
     /**
      * categories
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
-     * @lazy
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
     protected $categories = null;
 
@@ -466,7 +466,7 @@ class Person extends AbstractEntity
      * @param \CPSIT\Persons\Domain\Model\Content $contentElement
      * @return void
      */
-    public function addContentElement(\CPSIT\Persons\Domain\Model\Content $contentElement)
+    public function addContentElement(Content $contentElement)
     {
         $this->contentElements->attach($contentElement);
     }
@@ -477,7 +477,7 @@ class Person extends AbstractEntity
      * @param \CPSIT\Persons\Domain\Model\Content $contentElementToRemove The content element to be removed
      * @return void
      */
-    public function removeContentElement(\CPSIT\Persons\Domain\Model\Content $contentElementToRemove)
+    public function removeContentElement(Content $contentElementToRemove)
     {
         $this->contentElements->detach($contentElementToRemove);
     }
@@ -485,7 +485,7 @@ class Person extends AbstractEntity
     /**
      * Returns the content elements
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CPSIT\Persons\Domain\Model\ContentElement>
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CPSIT\Persons\Domain\Model\Content>
      */
     public function getContentElements()
     {
@@ -495,7 +495,7 @@ class Person extends AbstractEntity
     /**
      * Sets the content elements
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CPSIT\Persons\Domain\Model\ContentElement> $contentElements
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\CPSIT\Persons\Domain\Model\Content> $contentElements
      * @return void
      */
     public function setContentElements(ObjectStorage $contentElements)

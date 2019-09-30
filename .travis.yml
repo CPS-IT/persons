@@ -3,10 +3,10 @@ language: php
 matrix:
   fast_finish: true
   include:
-    - php: 7.0
-      env: TYPO3_VERSION=^8
-    - php: 7.1
-      env: TYPO3_VERSION=^8
+    - php: "7.2"
+      env: TYPO3_VERSION=^9
+    - php: "7.3"
+      env: TYPO3_VERSION=^9
 
 env:
   global:
@@ -22,7 +22,7 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - composer require typo3/cms=$TYPO3_VERSION
+  - composer require typo3/cms-core=$TYPO3_VERSION
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 

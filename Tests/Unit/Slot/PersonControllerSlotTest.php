@@ -371,8 +371,8 @@ class PersonControllerSlotTest extends UnitTestCase
      */
     public function getKeysToTransferInFilterActionReturnsAttribute()
     {
-        $this->attributeEqualTo(
-            'settingsKeyToTransferInFilterAction',
+        $this->assertEquals(
+            PersonControllerSlot::TRANSFER_KEYS_FILTER_ACTION,
             $this->subject::getKeysToTransferInFilterAction()
         );
     }
@@ -382,8 +382,8 @@ class PersonControllerSlotTest extends UnitTestCase
      */
     public function getKeysToTransferInListActionReturnsAttribute()
     {
-        $this->attributeEqualTo(
-            'settingsKeyToTransferInListAction',
+        $this->assertEquals(
+            PersonControllerSlot::TRANSFER_KEYS_LIST_ACTION,
             $this->subject::getKeysToTransferInListAction()
         );
     }
