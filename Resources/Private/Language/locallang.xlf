@@ -69,6 +69,13 @@
 			<trans-unit id="tx_persons_domain_model_person.status">
 				<source>Status</source>
 			</trans-unit>
+
+			<trans-unit id="detail.backToList">
+				<source>Back to list</source>
+			</trans-unit>
+			<trans-unit id="list.readMore">
+				<source>Show person</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

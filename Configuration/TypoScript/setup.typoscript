@@ -37,6 +37,11 @@ plugin.tx_persons {
         detailUrlPage = index.php?id
         detailUrlPerson = &tx_persons_persons[person]=
         detailUrlAction = &tx_persons_persons[action]=show&tx_persons_persons[controller]=Person
+        crop {
+            enable = {$plugin.tx_persons.settings.crop.enable}
+            maxCharacters = {$plugin.tx_persons.settings.crop.maxCharacters}
+            respectWordBoundaries = {$plugin.tx_persons.settings.crop.respectWordBoundaries}
+        }
     }
 }
 
