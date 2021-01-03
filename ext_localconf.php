@@ -3,16 +3,20 @@ defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
     function () {
+        /** @var \TYPO3\CMS\Core\Information\Typo3Version $t3Version */
+        $t3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        $pluginExtensionName = 'Persons';
+        $controllerName = \CPSIT\Persons\Controller\PersonController::class;
+        if ($t3Version->getMajorVersion() < 10) {
+            $pluginExtensionName = 'CPSIT.Persons';
+            $controllerName = 'Person';
+        }
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'CPSIT.Persons',
+            $pluginExtensionName,
             'Persons',
-            [
-                'Person' => 'list, show, showSelected,filter'
-            ],
+            [$controllerName => 'list, show, showSelected,filter'],
             // non-cacheable actions
-            [
-                'Person' => ''
-            ]
+            [$controllerName => '']
         );
 
         if (TYPO3_MODE === 'BE') {
@@ -35,7 +39,7 @@ call_user_func(
 
         // connect slots to signals
         /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
         $signalSlotDispatcher->connect(
             \CPSIT\Persons\Controller\PersonController::class,
             \CPSIT\Persons\Controller\PersonController::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN,

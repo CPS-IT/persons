@@ -26,13 +26,13 @@
     }
   ],
   "require": {
-    "typo3/cms-core": "^9.5",
-    "typo3/cms-extbase": "^9.5",
+    "typo3/cms-core": "^9.5 || ^10.4",
+    "typo3/cms-extbase": "^9.5 || ^10.4",
     "php": "^7.1",
     "ext-json": "*"
   },
   "require-dev": {
-    "nimut/testing-framework": "^4.1"
+    "nimut/testing-framework": "^4.1 || ^5.1"
   },
   "autoload": {
     "psr-4": {

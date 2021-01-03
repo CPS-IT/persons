@@ -3,7 +3,7 @@ defined('TYPO3_MODE') or die();
 
 $ll = 'LLL:EXT:persons/Resources/Private/Language/locallang_db.xlf:';
 
-return [
+$tcaFields = [
     'ctrl' => [
         'title' => $ll . 'tx_persons_domain_model_person',
         'label' => 'last_name',
@@ -24,9 +24,6 @@ return [
         ],
         'searchFields' => 'title,first_name,last_name,position,address,zip,city,phone,fax,email,www,biography,image,additional_images',
         'iconfile' => 'EXT:persons/Resources/Public/Icons/tx_persons_domain_model_person.svg'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, global_id, gender, title, first_name, last_name, position, address, zip, city, phone, fax, email,www,short_biography, biography, image,status',
     ],
     'palettes' => [
         'pStatus' => [
@@ -51,9 +48,9 @@ return [
     'types' => [
         '1' => [
             'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource,
-        --palette--;;pStatus, 
-        --palette--;;pGender, 
-        --palette--;;pNames, 
+        --palette--;;pStatus,
+        --palette--;;pGender,
+        --palette--;;pNames,
         --palette--;;pPhone,
         --palette--;;pWeb,
         --palette--;;pAddress,
@@ -82,7 +79,6 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -414,3 +410,14 @@ return [
 
     ],
 ];
+
+/** @var \TYPO3\CMS\Core\Information\Typo3Version $t3Version */
+$t3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+if ($t3Version->getMajorVersion() < 10) {
+    $tcaFields['columns']['l10n_parent']['exclude'] = true;
+    $tcaFields['interface'] = [
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, global_id, gender, title, first_name, last_name, position, address, zip, city, phone, fax, email,www,short_biography, biography, image,status',
+    ];
+}
+
+return $tcaFields;

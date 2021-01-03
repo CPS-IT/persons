@@ -5,8 +5,14 @@ call_user_func(function ($extensionKey) {
     /**
      * register plugin
      */
+    /** @var \TYPO3\CMS\Core\Information\Typo3Version $t3Version */
+    $t3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+    $pluginExtensionName = 'Persons';
+    if ($t3Version->getMajorVersion() < 10) {
+        $pluginExtensionName = 'CPSIT.Persons';
+    }
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-        'CPSIT.Persons',
+        $pluginExtensionName,
         'Persons',
         'LLL:EXT:' . $extensionKey . '/Resources/Private/Language/locallang_be.xlf:plugin.persons.title'
     );
