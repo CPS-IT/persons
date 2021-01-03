@@ -7,6 +7,12 @@ matrix:
       env: TYPO3_VERSION=^9
     - php: "7.3"
       env: TYPO3_VERSION=^9
+    - php: "7.4"
+      env: TYPO3_VERSION=^9
+    - php: "7.3"
+      env: TYPO3_VERSION=^10
+    - php: "7.4"
+      env: TYPO3_VERSION=^10
 
 env:
   global:
