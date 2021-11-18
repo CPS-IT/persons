@@ -306,7 +306,7 @@ class ImageServiceTest extends UnitTestCase
     /**
      * @test
      */
-    public function overwriteProcessingConfigurationDoesNotSetInalidValues()
+    public function overwriteProcessingConfigurationDoesNotSetInvalidValues()
     {
         $initialConfiguration = [];
         $invalidKey = 'baz';

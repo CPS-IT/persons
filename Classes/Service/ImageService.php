@@ -91,7 +91,7 @@ class ImageService extends BaseService
      * for allowed key/type.
      * @param array $configuration
      */
-    public function overwriteProcessingConfiguration(array $configuration): array
+    public function overwriteProcessingConfiguration(array $configuration): void
     {
         foreach ($configuration as $key => $value) {
             if (array_key_exists($key, static::$allowedProcessingKeys)) {
@@ -108,7 +108,7 @@ class ImageService extends BaseService
      * @param FileReference $fileReference
      * @return ProcessedFile
      */
-    public function getProcessedFile(FileReference $fileReference): FileInterface
+    public function getProcessedFile(FileReference $fileReference): ?FileInterface
     {
 
         $originalResource = $fileReference->getOriginalResource();

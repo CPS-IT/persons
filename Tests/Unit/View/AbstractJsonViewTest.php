@@ -63,11 +63,10 @@ class AbstractJsonViewTest extends UnitTestCase
      */
     public function setUp()
     {
-        $this->subject = $this->getMockBuilder(AbstractJsonView::class)
-            ->getMockForAbstractClass();
+
         $this->controllerContext = $this->getMockBuilder(ControllerContext::class)
             ->disableOriginalConstructor()->getMock();
-        $this->subject->setControllerContext($this->controllerContext);
+
         $this->processedFile = $this->getMockBuilder(ProcessedFile::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -79,7 +78,8 @@ class AbstractJsonViewTest extends UnitTestCase
         $this->imageService->expects($this->any())
             ->method('getProcessedFile')
             ->will($this->returnValue($this->processedFile));
-        $this->subject->injectImageService($this->imageService);
+        $this->subject = new AbstractJsonView($this->imageService);
+        $this->subject->setControllerContext($this->controllerContext);
     }
 
     /**
@@ -177,13 +177,8 @@ class AbstractJsonViewTest extends UnitTestCase
     /**
      * @test
      */
-    public function renderProcessesFileReferenceIfEnabledInSettings() {
-        $this->imageService = $this->getMockBuilder(ImageService::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getProcessedFile', 'getImageUri'])
-            ->getMock();
-        $this->subject->injectImageService($this->imageService);
-
+    public function renderProcessesFileReferenceIfEnabledInSettings()
+    {
         $settings = [
             AbstractJsonView::IMAGE_PROCESSING_KEY => [
                 'non empty configuration'

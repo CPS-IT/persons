@@ -95,8 +95,8 @@ class PersonController extends ActionController
     public function filterAction(): void
     {
         $templateVariables = [
-            'categories' => $this->settings['categories'],
-            'visible' => $this->settings['visible'],
+            'categories' => $this->settings['categories']??[],
+            'visible' => $this->settings['visible']??false,
             'settings' => $this->settings
         ];
 

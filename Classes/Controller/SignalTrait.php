@@ -33,6 +33,6 @@ trait SignalTrait
          * differs.
          */
         $slotResult = $this->signalSlotDispatcher->dispatch($class, $name, [$arguments]);
-        $arguments = $slotResult[0];
+        $arguments = $slotResult[0]??[];
     }
 }
