@@ -18,6 +18,7 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
+use TYPO3\CMS\Extbase\Mvc\Response;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 
 class MockFileReference
@@ -66,6 +67,10 @@ class AbstractJsonViewTest extends UnitTestCase
 
         $this->controllerContext = $this->getMockBuilder(ControllerContext::class)
             ->disableOriginalConstructor()->getMock();
+
+        $this->controllerContext->expects($this->any())
+            ->method('getResponse')
+            ->willReturn(new Response());
 
         $this->processedFile = $this->getMockBuilder(ProcessedFile::class)
             ->disableOriginalConstructor()
@@ -133,7 +138,7 @@ class AbstractJsonViewTest extends UnitTestCase
                 ]
             ]
         ];
-        $originalResource->expects($this->once())->method('getTitle')
+        $originalResource->expects($this->any())->method('getTitle')
             ->will($this->returnValue($title));
 
         $expected = json_encode(
