@@ -19,7 +19,7 @@ jobs:
       - name: "Composer Install"
         run: "composer require typo3/minimal=${{ matrix.typo3-version }}"
       - name: "Run Unit Tests"
-        run: "XDEBUG_MODE=coverage .Build/bin/phpunit -c Tests/Build/UnitTests.xml Tests/Unit/ --coverage-text --colors=never"
+        run: "XDEBUG_MODE=coverage .Build/bin/phpunit -c phpunit.xml --coverage-text --colors=never"
     strategy:
       fail-fast: false
       matrix:
