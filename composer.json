@@ -31,7 +31,7 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "nimut/testing-framework": "^4.1",
+    "nimut/testing-framework": "^5.3",
     "phpunit/phpunit": "^7",
     "typo3/testing-framework": "*"
   },
