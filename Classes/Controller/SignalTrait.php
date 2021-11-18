@@ -1,13 +1,17 @@
 <?php
 namespace CPSIT\Persons\Controller;
 
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
+use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
+
 /**
  * Class SignalTrait
  */
 trait SignalTrait
 {
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @var Dispatcher
      */
     protected $signalSlotDispatcher;
 
@@ -18,10 +22,10 @@ trait SignalTrait
      * @param string $name Signal name
      * @param array $arguments Signal arguments
      * @codeCoverageIgnore
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws InvalidSlotException
+     * @throws InvalidSlotReturnException
      */
-    public function emitSignal($class, $name, array &$arguments)
+    public function emitSignal(string $class, string $name, array &$arguments)
     {
         /**
          * Wrap arguments into array in order to allow changing the arguments

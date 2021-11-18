@@ -17,10 +17,12 @@ namespace CPSIT\Persons\Domain\Repository;
 use CPSIT\Persons\Domain\Model\Person;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -28,7 +30,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * The repository for Persons
  */
-class PersonRepository extends Repository
+class PersonRepository extends Repository implements SingletonInterface
 {
     /**
      * @var string Table name of associated model
@@ -46,26 +48,29 @@ class PersonRepository extends Repository
     protected $configurationManager;
 
     /**
-     * @param DataMapper $dataMapper
+     * @var ConnectionPool
      */
-    public function injectDataMapper(DataMapper $dataMapper): void
-    {
-        $this->dataMapper = $dataMapper;
-    }
+    private $connectionPool;
 
     /**
-     * @param ConfigurationManager $configurationManager
+     * @param ObjectManagerInterface|null $objectManager
+     * @param DataMapper|null $dataMapper
+     * @param ConfigurationManager|null $configurationManager
+     * @param ConnectionPool|null $connectionPool
      */
-    public function injectConfigurationManager(ConfigurationManager $configurationManager): void
+    public function __construct(?ObjectManagerInterface $objectManager = null, ?DataMapper $dataMapper = null, ?ConfigurationManager $configurationManager = null, ?ConnectionPool $connectionPool = null)
     {
+        $this->dataMapper = $dataMapper;
         $this->configurationManager = $configurationManager;
+        $this->connectionPool = $connectionPool;
+        parent::__construct($objectManager??GeneralUtility::makeInstance(ObjectManagerInterface::class));
     }
 
     /**
      * Find multiple records by given UIDs and optional ordering.
      *
      * @param string $recordList A comma separated string containing ids
-     * @param string $order Optional ordering in the form 'fieldName1|asc,fieldName2|desc'
+     * @param string|null $order Optional ordering in the form 'fieldName1|asc,fieldName2|desc'
      * @return array Matching Records
      * @throws InvalidConfigurationTypeException
      */
@@ -159,6 +164,6 @@ class PersonRepository extends Repository
      */
     protected function getQueryBuilder(): QueryBuilder
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE_NAME);
+        return $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
     }
 }
