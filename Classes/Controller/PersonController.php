@@ -14,6 +14,8 @@ namespace CPSIT\Persons\Controller;
  ***/
 
 use CPSIT\Persons\Domain\Model\Person;
+use CPSIT\Persons\Domain\Repository\PersonRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException;
@@ -24,10 +26,23 @@ use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
  */
 class PersonController extends ActionController
 {
-    use PersonRepositoryTrait, SignalTrait;
+    use SignalTrait;
 
-    const SIGNAL_FILTER_ACTION_BEFORE_ASSIGN = 'filterBeforeAssign';
-    const SIGNAL_LIST_ACTION_BEFORE_ASSIGN = 'listBeforeAssign';
+    public const SIGNAL_FILTER_ACTION_BEFORE_ASSIGN = 'filterBeforeAssign';
+    public const SIGNAL_LIST_ACTION_BEFORE_ASSIGN = 'listBeforeAssign';
+
+    /**
+     * @var PersonRepository
+     */
+    private $personRepository;
+
+    /**
+     * @param PersonRepository|null $personRepository
+     */
+    public function __construct(?PersonRepository $personRepository = null)
+    {
+        $this->personRepository = $personRepository??GeneralUtility::makeInstance(PersonRepository::class);
+    }
 
     /**
      * action list
@@ -80,8 +95,8 @@ class PersonController extends ActionController
     public function filterAction(): void
     {
         $templateVariables = [
-            'categories' => $this->settings['categories'],
-            'visible' => $this->settings['visible'],
+            'categories' => $this->settings['categories']??[],
+            'visible' => $this->settings['visible']??false,
             'settings' => $this->settings
         ];
 

@@ -35,7 +35,7 @@ call_user_func(
 
         // connect slots to signals
         /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
+        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
         $signalSlotDispatcher->connect(
             \CPSIT\Persons\Controller\PersonController::class,
             \CPSIT\Persons\Controller\PersonController::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN,

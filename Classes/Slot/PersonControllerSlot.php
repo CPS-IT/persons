@@ -31,23 +31,23 @@ class PersonControllerSlot implements SingletonInterface
     /**
      * Slot method name for signal PersonController::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN
      */
-    const SLOT_FILTER_ACTION_BEFORE_ASSIGN = 'handleFilterBeforeAssignSlot';
+    public const SLOT_FILTER_ACTION_BEFORE_ASSIGN = 'handleFilterBeforeAssignSlot';
 
     /**
      * Slot method name for signal PersonController::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN
      */
-    const SLOT_LIST_ACTION_BEFORE_ASSIGN = 'handleListBeforeAssignSlot';
+    public const SLOT_LIST_ACTION_BEFORE_ASSIGN = 'handleListBeforeAssignSlot';
 
-    const CONFIGURATION_KEY = 'configuration';
-    const OPTIONS_KEY = 'options';
-    const LOCALLANG_KEY = 'locallang';
+    public const CONFIGURATION_KEY = 'configuration';
+    public const OPTIONS_KEY = 'options';
+    public const LOCALLANG_KEY = 'locallang';
 
-    const TRANSFER_KEYS_FILTER_ACTION = [
+    public const TRANSFER_KEYS_FILTER_ACTION = [
         'categories', 'visible', 'selected',
         'languageParam',
         'languageUid'
     ];
-    const TRANSFER_KEYS_LIST_ACTION = [
+    public const TRANSFER_KEYS_LIST_ACTION = [
         'categories',
         'detailPid',
         'languageParam',
@@ -62,20 +62,20 @@ class PersonControllerSlot implements SingletonInterface
      * Settings keys which should be transferred from TypoScript in filter action
      * @var array
      */
-    static protected $settingsKeyToTransferInFilterAction = self::TRANSFER_KEYS_FILTER_ACTION;
+    protected static $settingsKeyToTransferInFilterAction = self::TRANSFER_KEYS_FILTER_ACTION;
 
     /**
      * Settings keys which should be transferred from TypoScript in list action
      * @var array
      */
-    static protected $settingsKeyToTransferInListAction = self::TRANSFER_KEYS_LIST_ACTION;
+    protected static $settingsKeyToTransferInListAction = self::TRANSFER_KEYS_LIST_ACTION;
 
 
     /**
      * Returns keys which should be transferred from settings to options in filter action
      * @return array
      */
-    static public function getKeysToTransferInFilterAction()
+    public static function getKeysToTransferInFilterAction(): array
     {
         return static::$settingsKeyToTransferInFilterAction;
     }
@@ -84,7 +84,7 @@ class PersonControllerSlot implements SingletonInterface
      * Returns keys which should be transferred from settings to options in list action
      * @return array
      */
-    static public function getKeysToTransferInListAction()
+    public static function getKeysToTransferInListAction(): array
     {
         return static::$settingsKeyToTransferInListAction;
     }
@@ -95,7 +95,7 @@ class PersonControllerSlot implements SingletonInterface
      * @param array $params
      * @return array
      */
-    public function handleFilterBeforeAssignSlot(array $params)
+    public function handleFilterBeforeAssignSlot(array $params): array
     {
 
         $params[static::CONFIGURATION_KEY] = $this->getConfiguration($params, static::$settingsKeyToTransferInFilterAction);
@@ -109,7 +109,7 @@ class PersonControllerSlot implements SingletonInterface
      * @param array $params
      * @return array
      */
-    public function handleListBeforeAssignSlot(array $params)
+    public function handleListBeforeAssignSlot(array $params): array
     {
         $params[static::CONFIGURATION_KEY] = $this->getConfiguration($params, static::$settingsKeyToTransferInListAction);
 
@@ -118,6 +118,7 @@ class PersonControllerSlot implements SingletonInterface
 
     /**
      * @param array $params
+     * @param array $keys
      * @return array
      */
     protected function getConfiguration(array $params, array $keys): array

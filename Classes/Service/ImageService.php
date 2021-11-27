@@ -21,6 +21,7 @@ namespace CPSIT\Persons\Service;
 
 use CPSIT\Persons\CallStaticTrait;
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
+use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Service\ImageService as BaseService;
@@ -80,7 +81,8 @@ class ImageService extends BaseService
      * Get the processing configuration
      * @return array
      */
-    public function getProcessingConfiguration() {
+    public function getProcessingConfiguration(): array
+    {
         return $this->processingConfiguration;
     }
 
@@ -89,7 +91,8 @@ class ImageService extends BaseService
      * for allowed key/type.
      * @param array $configuration
      */
-    public function overwriteProcessingConfiguration(array $configuration) {
+    public function overwriteProcessingConfiguration(array $configuration): void
+    {
         foreach ($configuration as $key => $value) {
             if (array_key_exists($key, static::$allowedProcessingKeys)) {
                 settype($value, static::$allowedProcessingKeys[$key]);
@@ -105,7 +108,8 @@ class ImageService extends BaseService
      * @param FileReference $fileReference
      * @return ProcessedFile
      */
-    public function getProcessedFile(FileReference $fileReference) {
+    public function getProcessedFile(FileReference $fileReference): ?FileInterface
+    {
 
         $originalResource = $fileReference->getOriginalResource();
         $referenceProperties = $originalResource->getReferenceProperties();

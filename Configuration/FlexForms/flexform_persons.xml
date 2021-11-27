@@ -19,6 +19,7 @@
                             <onChange>reload</onChange>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0">
                                         <numIndex index="0">LLL:EXT:persons/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.personListShow
@@ -62,6 +63,7 @@
                             </displayCond>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="0" type="array">
                                         <numIndex index="0">LLL:EXT:persons/Resources/Private/Language/locallang_be.xlf:flexforms_general.lastNameAsc
@@ -69,9 +71,8 @@
                                         <numIndex index="1">lastName|asc</numIndex>
                                     </numIndex>
                                     <numIndex index="1" type="array">
-                                        <numIndex index="0">LLL:EXT:persons/Resources/Private/Language/locallang_be.xlf:flexforms_general.empty
-                                        </numIndex>
-                                        <numIndex index="1"></numIndex>
+                                        <numIndex index="0">LLL:EXT:persons/Resources/Private/Language/locallang_be.xlf:flexforms_general.empty</numIndex>
+                                        <numIndex index="1" />
                                     </numIndex>
                                 </items>
                             </config>
@@ -126,6 +127,7 @@
                             </displayCond>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="0">
                                         <numIndex index="0">LLL:EXT:persons/Resources/Private/Language/locallang_be.xlf:flexforms_general.conjunction.or
@@ -154,13 +156,13 @@
                             </displayCond>
                             <config>
                                 <type>select</type>
+                                <renderType>selectTree</renderType>
                                 <autoSizeMax>10</autoSizeMax>
                                 <foreign_table>sys_category</foreign_table>
                                 <foreign_table_where>AND sys_category.sys_language_uid IN (-1, 0) ORDER BY
                                     sys_category.sorting ASC
                                 </foreign_table_where>
                                 <maxitems>9999</maxitems>
-                                <renderMode>tree</renderMode>
                                 <size>3</size>
                                 <treeConfig>
                                     <appearance>

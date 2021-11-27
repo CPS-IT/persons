@@ -18,6 +18,7 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext;
+use TYPO3\CMS\Extbase\Mvc\Response;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
 
 class MockFileReference
@@ -63,11 +64,14 @@ class AbstractJsonViewTest extends UnitTestCase
      */
     public function setUp()
     {
-        $this->subject = $this->getMockBuilder(AbstractJsonView::class)
-            ->getMockForAbstractClass();
+
         $this->controllerContext = $this->getMockBuilder(ControllerContext::class)
             ->disableOriginalConstructor()->getMock();
-        $this->subject->setControllerContext($this->controllerContext);
+
+        $this->controllerContext->expects($this->any())
+            ->method('getResponse')
+            ->willReturn(new Response());
+
         $this->processedFile = $this->getMockBuilder(ProcessedFile::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -79,7 +83,8 @@ class AbstractJsonViewTest extends UnitTestCase
         $this->imageService->expects($this->any())
             ->method('getProcessedFile')
             ->will($this->returnValue($this->processedFile));
-        $this->subject->injectImageService($this->imageService);
+        $this->subject = new AbstractJsonView($this->imageService);
+        $this->subject->setControllerContext($this->controllerContext);
     }
 
     /**
@@ -133,7 +138,7 @@ class AbstractJsonViewTest extends UnitTestCase
                 ]
             ]
         ];
-        $originalResource->expects($this->once())->method('getTitle')
+        $originalResource->expects($this->any())->method('getTitle')
             ->will($this->returnValue($title));
 
         $expected = json_encode(
@@ -177,13 +182,8 @@ class AbstractJsonViewTest extends UnitTestCase
     /**
      * @test
      */
-    public function renderProcessesFileReferenceIfEnabledInSettings() {
-        $this->imageService = $this->getMockBuilder(ImageService::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getProcessedFile', 'getImageUri'])
-            ->getMock();
-        $this->subject->injectImageService($this->imageService);
-
+    public function renderProcessesFileReferenceIfEnabledInSettings()
+    {
         $settings = [
             AbstractJsonView::IMAGE_PROCESSING_KEY => [
                 'non empty configuration'
