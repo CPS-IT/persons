@@ -15,6 +15,8 @@ namespace CPSIT\Persons\View;
  * The TYPO3 project - inspiring people to share!
  */
 
+use CPSIT\Persons\Service\ImageService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Mvc\View\JsonView;
 use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
@@ -29,24 +31,24 @@ class AbstractJsonView extends JsonView
     /**
      * settings key for image processing configuration
      */
-    const IMAGE_PROCESSING_KEY = 'imageProcessing';
+    public const IMAGE_PROCESSING_KEY = 'imageProcessing';
 
     /**
-     * @var \CPSIT\Persons\Service\ImageService
+     * @var ImageService
      */
-    protected $imageService;
+    private $imageService;
 
     /**
      * @var array
      */
-    protected $settings = [];
+    private $settings = [];
 
     /**
-     * @param \CPSIT\Persons\Service\ImageService $imageService
+     * @param ImageService|null $imageService
      */
-    public function injectImageService(\CPSIT\Persons\Service\ImageService $imageService)
+    public function __construct(?ImageService $imageService = null)
     {
-        $this->imageService = $imageService;
+        $this->imageService = $imageService??GeneralUtility::makeInstance(ImageService::class);
     }
 
     /**
@@ -113,12 +115,12 @@ class AbstractJsonView extends JsonView
      * as key => value pairs. The key corresponds to the property name.
      * The value is transformed recursively.
      *
-     * @param $object FileReference
+     * @param FileReference $object
      * @param array $configuration Local configuration for property of type FileReference
      * @param array $transformedObject
      * @return array
      */
-    protected function transformFileReference($object, array $configuration, $transformedObject)
+    protected function transformFileReference(FileReference $object, array $configuration, array $transformedObject)
     {
         $originalResource = $object->getOriginalResource();
 
@@ -143,8 +145,7 @@ class AbstractJsonView extends JsonView
 
 
     /**
-     * Injects the settings
-     * @param $settings
+     * @param array $settings
      */
     public function injectSettings(array $settings)
     {

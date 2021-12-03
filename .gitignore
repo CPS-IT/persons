@@ -1,2 +1,6 @@
 /.Build
 /composer.lock
+
+/Tests/phpunit_result
+/var
+/Tests/Tests

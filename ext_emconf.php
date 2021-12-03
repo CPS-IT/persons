@@ -17,14 +17,14 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'plugin',
     'author' => 'Dirk Wenzel',
     'author_email' => 'wenzel@cps-it.de',
-    'state' => 'beta',
+    'state' => 'experimental',
     'uploadfolder' => '1',
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '1.0.0',
+    'version' => '1.1.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-9.5.99',
+            'typo3' => '9.5.0-10.4.99',
         ],
     ],
 ];

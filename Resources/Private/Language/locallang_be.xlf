@@ -12,6 +12,9 @@
 		<trans-unit id="flexforms_general.ascending">
 			<source>ascending</source>
 		</trans-unit>
+		<trans-unit id="flexforms_general.empty">
+            <source>---</source>
+        </trans-unit>
 		<trans-unit id="flexforms_general.backPage">
 			<source>Back Page</source>
 		</trans-unit>

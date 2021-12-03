@@ -45,7 +45,10 @@ class PersonControllerTest extends UnitTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->subject->injectPersonRepository($this->personRepository);
+
+        $reflectedClass = new \ReflectionClass(PersonController::class);
+        $constructor = $reflectedClass->getConstructor();
+        $constructor->invoke($this->subject, $this->personRepository);
     }
 
     /**
@@ -96,12 +99,14 @@ class PersonControllerTest extends UnitTestCase
         $personRepository = $this->getMockBuilder(PersonRepository::class)
             ->setMethods(['findMultipleByUid'])->disableOriginalConstructor()->getMock();
 
+        $reflectedClass = new \ReflectionClass(PersonController::class);
+        $constructor = $reflectedClass->getConstructor();
+        $constructor->invoke($this->subject, $personRepository);
+
         $personRepository->expects($this->once())
             ->method('findMultipleByUid')
             ->with($settings['selectedPersons'])
             ->will($this->returnValue($persons));
-
-        $this->inject($this->subject, 'personRepository', $personRepository);
 
         $this->view->expects($this->once())
             ->method('assign')
