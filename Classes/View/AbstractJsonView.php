@@ -60,7 +60,7 @@ class AbstractJsonView extends JsonView
      * @param array $configuration Configuration for transforming the given object or NULL
      * @return array Object structure as an array
      */
-    protected function transformObject($object, array $configuration)
+    protected function transformObject(object $object, array $configuration)
     {
         $transformedObject = [];
 
@@ -93,7 +93,7 @@ class AbstractJsonView extends JsonView
      * @param array $configuration Configuration for transforming the value
      * @return array The transformed value
      */
-    protected function transformValue($value, array $configuration)
+    protected function transformValue($value, array $configuration, $firstLevel = false)
     {
         if (!$value instanceof ObjectStorage) {
             return parent::transformValue($value, $configuration);

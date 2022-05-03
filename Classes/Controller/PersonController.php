@@ -15,6 +15,9 @@ namespace CPSIT\Persons\Controller;
 
 use CPSIT\Persons\Domain\Model\Person;
 use CPSIT\Persons\Domain\Repository\PersonRepository;
+use CPSIT\Persons\Event\PersonsHandleFilterBeforeAssignEvent;
+use CPSIT\Persons\Event\PersonsHandleListBeforeAssignEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -26,20 +29,12 @@ use TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException;
  */
 class PersonController extends ActionController
 {
-    use SignalTrait;
-
-    public const SIGNAL_FILTER_ACTION_BEFORE_ASSIGN = 'filterBeforeAssign';
-    public const SIGNAL_LIST_ACTION_BEFORE_ASSIGN = 'listBeforeAssign';
-
-    /**
-     * @var PersonRepository
-     */
-    private $personRepository;
+    private PersonRepository $personRepository;
 
     /**
      * @param PersonRepository|null $personRepository
      */
-    public function __construct(?PersonRepository $personRepository = null)
+    public function __construct(?PersonRepository $personRepository)
     {
         $this->personRepository = $personRepository??GeneralUtility::makeInstance(PersonRepository::class);
     }
@@ -58,12 +53,9 @@ class PersonController extends ActionController
             'persons' => $persons,
             'settings' => $this->settings
         ];
-        $this->emitSignal(
-            __CLASS__,
-            static::SIGNAL_LIST_ACTION_BEFORE_ASSIGN,
-            $templateVariables
-        );
-        $this->view->assignMultiple($templateVariables);
+
+        $event = $this->eventDispatcher->dispatch(new PersonsHandleListBeforeAssignEvent($this, $templateVariables));
+        $this->view->assignMultiple($event->getData());
     }
 
     /**
@@ -100,11 +92,7 @@ class PersonController extends ActionController
             'settings' => $this->settings
         ];
 
-        $this->emitSignal(
-            __CLASS__,
-            static::SIGNAL_FILTER_ACTION_BEFORE_ASSIGN,
-            $templateVariables
-        );
-        $this->view->assignMultiple($templateVariables);
+        $event = $this->eventDispatcher->dispatch(new PersonsHandleFilterBeforeAssignEvent($this, $templateVariables));
+        $this->view->assignMultiple($event->getData());
     }
 }

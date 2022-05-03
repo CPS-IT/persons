@@ -6,4 +6,17 @@ services:
 
   CPSIT\Persons\:
     resource: '../Classes/*'
-    #exclude: ['../Classes/Domain/{Enum}']
+    exclude: ['../Classes/Event/*']
+
+
+  CPSIT\Persons\Listener\PersonControllerListener:
+    public: false
+    tags:
+      - name: event.listener
+        identifier: 'persons-event-listener-filter-before-assign'
+        event: CPSIT\Persons\Event\PersonsHandleFilterBeforeAssignEvent
+        method: 'handleFilterBeforeAssign'
+      - name: event.listener
+        identifier: 'persons-event-listener-list-before-assign'
+        event: CPSIT\Persons\Event\PersonsHandleListBeforeAssignEvent
+        method: 'handleListBeforeAssign'
