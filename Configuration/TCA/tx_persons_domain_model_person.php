@@ -25,9 +25,7 @@ return [
         'searchFields' => 'title,first_name,last_name,position,address,zip,city,phone,fax,email,www,biography,image,additional_images',
         'iconfile' => 'EXT:persons/Resources/Public/Icons/tx_persons_domain_model_person.svg'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, global_id, gender, title, first_name, last_name, position, address, zip, city, phone, fax, email,www,short_biography, biography, image,status',
-    ],
+    'interface' => [],
     'palettes' => [
         'pStatus' => [
             'showitem' => 'status,position'
@@ -67,22 +65,11 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => 0,
+                'type' => 'language'
             ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
@@ -351,7 +338,6 @@ return [
                     'levelLinksPosition' => 'bottom',
                     'useSortable' => true,
                     'showPossibleLocalizationRecords' => true,
-                    'showRemovedLocalizationRecords' => true,
                     'showAllLocalizationLink' => true,
                     'showSynchronizationLink' => true,
                     'enabledControls' => [
