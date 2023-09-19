@@ -17,6 +17,7 @@ use CPSIT\Persons\Domain\Model\Person;
 use CPSIT\Persons\Domain\Repository\PersonRepository;
 use CPSIT\Persons\Event\PersonsHandleFilterBeforeAssignEvent;
 use CPSIT\Persons\Event\PersonsHandleListBeforeAssignEvent;
+use CPSIT\Persons\Seo\TitleProvider;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
@@ -65,6 +66,7 @@ class PersonController extends ActionController
      */
     public function showAction(Person $person): void
     {
+        GeneralUtility::makeInstance(TitleProvider::class)->setPerson($person);
         $this->view->assign('person', $person);
     }
 
