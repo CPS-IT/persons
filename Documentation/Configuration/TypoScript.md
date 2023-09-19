@@ -81,3 +81,15 @@ plugin.tx_persons {
 ```
   
 ## TypoScript Controller / Page Type
+
+## Page Title
+
+Use provided title provider.
+
+```typo3_typoscript
+config.pageTitleProviders {
+    record {
+        provider = CPSIT\Persons\Seo\TitleProvider
+    }
+}
+```
